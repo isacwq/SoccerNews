@@ -6,17 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.favorites.FavoritesFragment">
 
-    <TextView
-        android:id="@+id/text_favorites"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFavorites"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/secondary_margin"
-        android:layout_marginTop="@dimen/secondary_margin"
-        android:layout_marginEnd="@dimen/secondary_margin"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/news_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
