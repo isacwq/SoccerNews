@@ -4,4 +4,5 @@
     <string name="title_favorites">Favorites</string>
     <string name="content_description_image_news">News photo</string>
     <string name="open_link">Open Link</string>
+    <string name="error_network">Network Error</string>
 </resources>

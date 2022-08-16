@@ -1,5 +1,6 @@
 package com.github.isactomaz.soccernews.data.local;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,7 +17,7 @@ public interface NewsDao {
     List<News> getAll();
 
     @Query("SELECT * FROM news WHERE favorite = 1")
-    List<News> filterFavoritesNews();
+    LiveData<List<News>> filterFavoritesNews();
 
     @Query("SELECT * FROM news WHERE title LIKE :title LIMIT 1")
     News findByTitle(String title);

@@ -1,10 +1,13 @@
 package com.github.isactomaz.soccernews.ui.news;
 
+import android.os.AsyncTask;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.github.isactomaz.soccernews.data.local.SoccerNewsRepository;
 import com.github.isactomaz.soccernews.data.remote.NewsRemoteDataSource;
 import com.github.isactomaz.soccernews.data.remote.SoccerNewsService;
 import com.github.isactomaz.soccernews.domain.News;
@@ -26,9 +29,15 @@ public class NewsViewModel extends ViewModel {
     private final MutableLiveData<List<News>> news = new MutableLiveData<>();
     private final MutableLiveData<State> state = new MutableLiveData<>();
 
-    public NewsViewModel() {
-        SoccerNewsService soccerNewsService = new NewsRemoteDataSource().newsApi();
+    private SoccerNewsService soccerNewsService;
 
+    public NewsViewModel() {
+        soccerNewsService = new NewsRemoteDataSource().newsApi();
+
+        findNews();
+    }
+
+    public void findNews() {
         state.setValue(State.LOADING);
         soccerNewsService.getNews().enqueue(new Callback<List<News>>() {
             @Override
@@ -46,6 +55,11 @@ public class NewsViewModel extends ViewModel {
                 state.setValue(State.ERROR);
             }
         });
+    }
+
+    public void insertNews(News news) {
+        AsyncTask.execute(() ->
+                SoccerNewsRepository.getInstance().getLocalDb().newsDao().insert(news));
     }
 
     public LiveData<List<News>> getNews() {

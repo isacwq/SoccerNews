@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notícias do Futebol Feminino</string>
+    <string name="title_news">Notícias</string>
+    <string name="title_favorites">Favoritos</string>
+    <string name="content_description_image_news">Imagem da notícias</string>
+    <string name="open_link">Abrir Link</string>
+    <string name="error_network">Error de conexão</string>
+</resources>

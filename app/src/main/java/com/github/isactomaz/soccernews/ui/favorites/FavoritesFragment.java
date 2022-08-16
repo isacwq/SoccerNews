@@ -10,12 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.github.isactomaz.soccernews.MainActivity;
 import com.github.isactomaz.soccernews.databinding.FragmentFavoritesBinding;
-import com.github.isactomaz.soccernews.domain.News;
 import com.github.isactomaz.soccernews.ui.adapter.NewsAdapter;
-
-import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
@@ -29,20 +25,18 @@ public class FavoritesFragment extends Fragment {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        getFavoritesNews();
+        getFavoritesNews(favoritesViewModel);
 
         return root;
     }
 
-    private void getFavoritesNews() {
-        MainActivity activity = (MainActivity) getActivity();
-        if (activity != null) {
-            List<News> favoritesNews = activity.getDb().newsDao().filterFavoritesNews();
+    private void getFavoritesNews(FavoritesViewModel favoritesViewModel) {
+        favoritesViewModel.getFavoritesNews().observe(getViewLifecycleOwner(), favoritesNews -> {
             binding.recyclerFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
-            binding.recyclerFavorites.setAdapter(new NewsAdapter(favoritesNews, updatedNews -> {
-                activity.getDb().newsDao().insert(updatedNews);
-            }));
-        }
+            binding.recyclerFavorites.setAdapter(
+                    new NewsAdapter(favoritesNews, favoritesViewModel::insertNews)
+            );
+        });
     }
 
     @Override
